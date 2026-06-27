@@ -59,5 +59,27 @@ typedef struct regIndex{
 } regIndex;
 
 
+typedef struct grafo{
+    vertice *vertices;
+    int qtdVertices;
+    
+} grafo;
+
+// Para cada estação um vértice [estações com o mesmo nome são consideradas as mesmas]
+typedef struct vertice{
+    char* nomeEstacao;
+    aresta* arestas;    // ponteiro para primeiro item da lista linear
+
+} vertice;
+
+// Representam as arestas entre duas estações
+typedef struct aresta{
+    char* nomeEstacao;      // nome da prox estação ou estação de integração
+    int* distProxEstacao;
+    char** nomesLinhas;     // nome das linhas associadas a está estação
+
+    aresta* next;           // ponteiro para próxima aresta associada ao mesmo vértice
+} aresta;
+
 
 #endif
