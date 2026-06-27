@@ -4,10 +4,10 @@
 #include "structs.h"
 
 // Cria um grafo 
-grafo* criarGrafoEstacoes();
+grafoEstacoes *criarGrafoEstacoes();
 
 // Função que cria um vértice e insere no grafo
-void criaVertice(grafo *grafo, char *nomeEstacao);
+void criarVertice(grafoEstacoes *grafo, char *nomeEstacao, int tamNomeEstacao);
 
 
 
