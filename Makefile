@@ -5,11 +5,13 @@ SRC = main.c \
       auxiliares.c \
       cabecalhos.c \
       arquivos.c \
+      grafoEstacoes.c \
       func_buscar.c \
       func_criar.c \
       func_insercao.c \
       func_remocao.c \
       func_atualizar.c \
+      func_grafos.c \
       registros.c 
 
 OBJ = $(SRC:.c=.o)

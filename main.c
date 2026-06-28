@@ -10,6 +10,8 @@
 #include "funcionalidades.h"
 #include "registros.h"
 #include "structs.h"
+#include "grafoEstacoes.h"
+
 int main(){    
     dadosHeader *dados = criarDadosHeader();
 
@@ -45,6 +47,9 @@ int main(){
         break;
     case 9:
         funcNove(dados);
+        break;
+    case 10:
+        funcDez();
         break;
     default:
         break;

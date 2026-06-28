@@ -1,6 +1,3 @@
-#include <stdlib.h>
-#include <string.h>
-
 #include "grafoEstacoes.h"
 #include "structs.h"
 
@@ -25,7 +22,7 @@ void criarVertice(grafoEstacoes *grafo, char *nomeEstacao, int tamNomeEstacao){
     vertice->arestas = NULL;
 
     // inserindo vertice no grafo respeitando sua ordenação
-    insertionSort(grafo, vertice);
+    insertionSortVertice(grafo, vertice);
 
     int newQtd = grafo->qtdVertices +1;
     grafo->qtdVertices = newQtd;
@@ -63,3 +60,31 @@ void insertionSortVertice(grafoEstacoes *grafo, verticeEstacoes *vertice){
 
 }
 
+int buscarVertice(grafoEstacoes *grafo, char *nomeEstacao){
+    int comp; verticeEstacoes *aux;
+
+    int esq = 0;
+    int dir = (grafo->qtdVertices) -1;
+    int meio;
+    
+    // Busca binária
+    while (esq <= dir){
+        meio = (esq + dir)/2;
+
+        aux = grafo->vertices[meio];
+        comp = strcmp(nomeEstacao, aux->nomeEstacao);
+
+        if (comp == 0){
+            return meio;
+        }
+        else if(comp < 0){
+            dir = meio -1;
+        }
+        else{
+            esq = meio +1;
+        }
+    }
+
+    // Não encontrou o vertice
+    return -1;
+}

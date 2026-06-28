@@ -10,6 +10,7 @@
 #include "funcionalidades.h"
 #include "registros.h"
 #include "structs.h"
+#include "grafoEstacoes.h"
 
 
 // --- Funcionalidade 1 do programa ---
@@ -45,7 +46,11 @@ void funcSete(dadosHeader *dados);
 void funcOito(dadosHeader *dados);  
 
 // --- Funcionalidade 9 do programa ---
-// --- Atualiza os campos dos registros que corresponderem a um determinado critério de busca
+// Atualiza os campos dos registros que corresponderem a um determinado critério de busca
 void funcNove(dadosHeader *dados);
+
+// --- Funcionalidade 10 do programa ---
+// Gera um grafo de estações a partir do arquivo binário 
+void funcDez();
 
 #endif
