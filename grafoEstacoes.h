@@ -30,5 +30,10 @@ arestaEstacoes *criarAresta(char *nomeEstacao, int distancia, char *nomeLinha);
 
 void insertionSortAresta(verticeEstacoes *vertice, arestaEstacoes *aresta);
 
+// Adiciona um novo nome de linha à aresta.
+// Caso a linha já exista, não faz nada.
+void adicionarNomeLinha(arestaEstacoes *aresta, char *nomeLinha);
+
+void imprimirGrafo(grafoEstacoes *grafo);
 
 #endif

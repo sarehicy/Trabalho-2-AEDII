@@ -101,12 +101,12 @@ arestaEstacoes *criarAresta(char *nomeEstacao, int distancia, char *nomeLinha){
     strcpy(aresta->nomeEstacao, nomeEstacao);
 
     // Criando vetor de nomes linha
-    // aresta->qtdLinhas = 1;
-    // aresta->nomesLinhas = malloc(sizeof(char*)*(aresta->qtdLinhas + 1));
+    aresta->qtdLinhas = 1;
+    aresta->nomesLinhas = malloc(sizeof(char*)*(aresta->qtdLinhas + 1));
     
-    // tamNome = srtlen(nomeLinha);
-    // aresta->nomesLinhas[0] = malloc(sizeof(char)*(tamNome +1));
-    // strcpy(aresta->nomesLinhas[0], nomeLinha);
+    tamNome = strlen(nomeLinha);
+    aresta->nomesLinhas[0] = malloc(sizeof(char*));
+    strcpy(aresta->nomesLinhas[0], nomeLinha);
     
 
     aresta->distProxEstacao = distancia;
@@ -114,6 +114,44 @@ arestaEstacoes *criarAresta(char *nomeEstacao, int distancia, char *nomeLinha){
     aresta->next = NULL;
 
     return aresta;
+}
+
+
+void adicionarNomeLinha(arestaEstacoes *aresta, char *nomeLinha){
+
+    // Verifica se essa linha já está cadastrada
+    for(int i = 0; i < aresta->qtdLinhas; i++){
+        if(strcmp(aresta->nomesLinhas[i], nomeLinha) == 0){
+            return; // Já existe, não adiciona novamente
+        }
+    }
+
+    // Aumenta a quantidade de linhas
+    aresta->qtdLinhas++;
+
+    // Redimensiona o vetor de ponteiros para caber a nova linha
+    char **aux = realloc(aresta->nomesLinhas, sizeof(char*) * aresta->qtdLinhas);
+    if(aux == NULL){
+        exit(0);
+    }
+    aresta->nomesLinhas = aux;
+
+    // Aloca memória para a nova string em um ponteiro temporário
+    int tamNome = strlen(nomeLinha);
+    char *novaLinha = malloc(sizeof(char) * (tamNome + 1));
+    strcpy(novaLinha, nomeLinha);
+
+    // Insere o nome no lugar certo alfabéticamente
+    // Começa do último elemento válido antes do realloc
+    int i = aresta->qtdLinhas - 2; 
+    
+    while (i >= 0 && strcmp(aresta->nomesLinhas[i], novaLinha) > 0) {
+        aresta->nomesLinhas[i + 1] = aresta->nomesLinhas[i];
+        i--;
+    }
+    
+    // Insere o ponteiro da nova linha na posição alfabética correta
+    aresta->nomesLinhas[i + 1] = novaLinha;
 }
 
 void insertionSortAresta(verticeEstacoes *vertice, arestaEstacoes *aresta){
@@ -140,11 +178,17 @@ void insertionSortAresta(verticeEstacoes *vertice, arestaEstacoes *aresta){
         return;
     }
     if (comp == 0){ 
-        // Nomes de estação iguais, desempata por nome linha
+        // A aresta já existe. Apenas adiciona o novo nome de linha
+        adicionarNomeLinha(aux, aresta->nomesLinhas[0]);
+
+        // A aresta criada não será utilizada
+        free(aresta->nomesLinhas[0]);
+        free(aresta->nomesLinhas);
+        free(aresta->nomeEstacao);
+        free(aresta);
 
         return;
     }
-
 
     /*  #   Insersão no Meio    #   */
     while (aux->next != NULL){
@@ -159,20 +203,55 @@ void insertionSortAresta(verticeEstacoes *vertice, arestaEstacoes *aresta){
             return;
         }
         if (comp == 0){
-            // Nomes de estação iguais, desempata por nome linha
+            // A aresta já existe. Apenas adiciona o novo nome de linha
+            adicionarNomeLinha(aux->next, aresta->nomesLinhas[0]);
+
+            // A aresta criada não será utilizada
+            free(aresta->nomesLinhas[0]);
+            free(aresta->nomesLinhas);
+            free(aresta->nomeEstacao);
+            free(aresta);
 
             return;
         }
-
-
         // Percorre lista encadeada
         aux = aux->next;
     }
-
     /*  #   Insersão no Final   #   */
     aux->next = aresta;
+}
 
 
 
+void imprimirGrafo(grafoEstacoes *grafo) {
+    for (int i = 0; i < grafo->qtdVertices; i++) {
+        verticeEstacoes *vertice = grafo->vertices[i];
 
+        // Se o vértice não tem nenhuma aresta, não imprime e passa para o próximo
+        if (vertice->arestas == NULL) {
+            continue;
+        }
+
+        // Imprime o nome da estação de origem
+        printf("%s", vertice->nomeEstacao);
+
+        // Percorre a lista de arestas
+        arestaEstacoes *arestaAux = vertice->arestas;
+        while (arestaAux != NULL) {
+            
+            // Imprime a próxima estação e a distância com vírgulas
+            printf(", %s, %d", arestaAux->nomeEstacao, arestaAux->distProxEstacao);
+
+            // Imprime todas as linhas dessa aresta
+            for (int j = 0; j < arestaAux->qtdLinhas; j++) {
+                printf(", %s", arestaAux->nomesLinhas[j]);
+            }
+
+            // Vai para a próxima aresta
+            arestaAux = arestaAux->next;
+        }
+
+        // Quando finalizar o vértice, quebra a linha
+        printf("\n");
+    }
 }

@@ -98,7 +98,7 @@ void funcDez(){
                         // Estação e estação de integração com o mesmo nome
                         if(!strcmp(registro->nomeEstacao, registroAux->nomeEstacao)) break;
 
-                        arestaAux = criarAresta(registroAux->nomeEstacao, 0, "Integracao");
+                        arestaAux = criarAresta(registroAux->nomeEstacao, 0, "Integração");
                         insertionSortAresta(grafo->vertices[verticeID], arestaAux);
 
                         break;
@@ -112,20 +112,26 @@ void funcDez(){
 
     }
 
+    imprimirGrafo(grafo);
 
     // Testando :P
+    /*
     for(int i = 0; i<grafo->qtdVertices; i++){
         printf("vertice: %s ", grafo->vertices[i]->nomeEstacao);
         arestaAux = grafo->vertices[i]->arestas;
 
         while(arestaAux != NULL){
             printf("aresta: %s ", arestaAux->nomeEstacao);
+
+            for(int j=0; j<arestaAux->qtdLinhas; j++){
+                printf("linha %s ", arestaAux->nomesLinhas[j]);
+            }
+
             arestaAux = arestaAux->next;
         }
 
         printf("\n");
-
-    }
+    }*/
 
     /*   #   Fechando Arquivos e BinarioNaTela()    # */
 

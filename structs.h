@@ -63,8 +63,8 @@ typedef struct regIndex{
 typedef struct arestaEstacoes{
     char *nomeEstacao;      // nome da prox estação ou estação de integração
     int distProxEstacao;
-    // int qtdLinhas;
-    // char **nomesLinhas;     // nome das linhas associadas a está estação
+    int qtdLinhas;  
+    char **nomesLinhas;     // nome das linhas associadas a está estação
 
     struct arestaEstacoes *next;    // ponteiro para próxima aresta associada ao mesmo vértice
 } arestaEstacoes;
