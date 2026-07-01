@@ -26,9 +26,9 @@ void insertionSortVertice(grafoEstacoes *grafo, verticeEstacoes *vertice);
 // Retorna -1 se não encontrar a aresta
 int buscarVertice(grafoEstacoes *grafo, char *nomeEstacao);
 
-void criarAresta();
+arestaEstacoes *criarAresta(char *nomeEstacao, int distancia, char *nomeLinha);
 
-void insertionSortAresta();
+void insertionSortAresta(verticeEstacoes *vertice, arestaEstacoes *aresta);
 
 
 #endif
